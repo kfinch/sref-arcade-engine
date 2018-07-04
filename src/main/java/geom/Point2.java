@@ -3,7 +3,7 @@ package geom;
 /**
  * An immutable representation of a point on a 2D plane.
  */
-public class Point2
+public class Point2 implements Shape
 {
 
     public final double x, y;
@@ -41,9 +41,16 @@ public class Point2
      * @param translate
      * @return
      */
+    @Override
     public Point2 translatedBy(Vector2 translate)
     {
         return new Point2(x + translate.x, y + translate.y);
+    }
+
+    @Override
+    public AABox getAABox()
+    {
+        return new AABox(x, x, y, y);
     }
 
     @Override
