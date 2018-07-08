@@ -16,10 +16,14 @@ public class Polygon implements Shape {
     @Override
     public Polygon translatedBy(Vector2 v)
     {
-        Point2[] newPoints = new Point2[points.length];
-        for (int i=0; i<points.length; i++) {
-            newPoints[i] = points[i].translatedBy(v);
-        }
+        Point2[] newPoints = Arrays.stream(points).map(p -> p.translatedBy(v)).toArray(Point2[]::new);
+        return new Polygon(newPoints);
+    }
+
+    @Override
+    public Polygon rotatedAbout(Point2 rotCenter, double angle)
+    {
+        Point2[] newPoints = Arrays.stream(points).map(p -> p.rotatedAbout(rotCenter, angle)).toArray(Point2[]::new);
         return new Polygon(newPoints);
     }
 

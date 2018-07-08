@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * An axis-aligned box, useful for calculating collision
  */
-public class AABox implements Shape {
+public class AABox {
 
     public final double xMin, xMax, yMin, yMax, xCenter, yCenter, xBound, yBound;
 
@@ -51,16 +51,9 @@ public class AABox implements Shape {
         return new AABox(center.x - xBound, center.x + xBound, center.y - yBound, center.y + yBound);
     }
 
-    @Override
     public AABox translatedBy(Vector2 v)
     {
         return new AABox(xMin + v.x, xMax + v.x, yMin + v.y, yMax + v.y);
-    }
-
-    @Override
-    public AABox getAABox()
-    {
-        return this;
     }
 
     @Override

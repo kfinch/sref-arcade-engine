@@ -50,6 +50,11 @@ public class Point2 implements Shape
     }
 
     @Override
+    public Point2 rotatedAbout(Point2 rotCenter, double angle) {
+        return this.translatedBy(rotCenter.vectorTo(this).rotatedBy(angle));
+    }
+
+    @Override
     public AABox getAABox()
     {
         return new AABox(x, x, y, y);

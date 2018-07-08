@@ -27,6 +27,11 @@ public class Circle implements Shape {
     }
 
     @Override
+    public Circle rotatedAbout(Point2 rotCenter, double angle) {
+        return new Circle(center.rotatedAbout(rotCenter, angle), radius);
+    }
+
+    @Override
     public AABox getAABox() {
         if (aaBox == null) {
             aaBox = generateAABox();
