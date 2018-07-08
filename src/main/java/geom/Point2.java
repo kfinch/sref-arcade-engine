@@ -1,5 +1,7 @@
 package geom;
 
+import java.util.Objects;
+
 /**
  * An immutable representation of a point on a 2D plane.
  */
@@ -54,13 +56,16 @@ public class Point2 implements Shape
     }
 
     @Override
-    public boolean equals(Object o)
-    {
-        if (o instanceof Point2) {
-            Point2 p = (Point2) o;
-            return (x == p.x) && (y == p.y);
-        }
-        return false;
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Point2 point2 = (Point2) o;
+        return Double.compare(point2.x, x) == 0 &&
+                Double.compare(point2.y, y) == 0;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
 }

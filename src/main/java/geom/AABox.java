@@ -1,5 +1,7 @@
 package geom;
 
+import java.util.Objects;
+
 /**
  * An axis-aligned box, useful for calculating collision
  */
@@ -61,4 +63,19 @@ public class AABox implements Shape {
         return this;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        AABox aaBox = (AABox) o;
+        return Double.compare(aaBox.xMin, xMin) == 0 &&
+                Double.compare(aaBox.xMax, xMax) == 0 &&
+                Double.compare(aaBox.yMin, yMin) == 0 &&
+                Double.compare(aaBox.yMax, yMax) == 0;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(xMin, xMax, yMin, yMax);
+    }
 }

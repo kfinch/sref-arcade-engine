@@ -1,5 +1,7 @@
 package geom;
 
+import java.util.Objects;
+
 /**
  * An immutable representation of a 2D vector.
  */
@@ -174,11 +176,15 @@ public class Vector2 {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Vector2) {
-            Vector2 v = (Vector2) o;
-            return (x == v.x) && (y == v.y);
-        }
-        return false;
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Vector2 vector2 = (Vector2) o;
+        return Double.compare(vector2.x, x) == 0 &&
+                Double.compare(vector2.y, y) == 0;
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(x, y);
+    }
 }
