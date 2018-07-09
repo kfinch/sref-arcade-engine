@@ -16,7 +16,7 @@ public class Vector2 {
         this.x = x;
         this.y = y;
         this.magnitude = magnitude;
-        this.angle = normalizeAngle(angle);
+        this.angle = Angles.normalized(angle);
     }
 
     /**
@@ -57,17 +57,6 @@ public class Vector2 {
         return new Vector2(getX(magnitude, angle), getY(magnitude, angle), magnitude, angle);
     }
 
-    private static double normalizeAngle (double angle)
-    {
-        double modAngle = angle % (Math.PI * 2);
-        if (modAngle > Math.PI) {
-            return modAngle - (2 * Math.PI);
-        } else if (modAngle < -Math.PI) {
-            return modAngle + (2 * Math.PI);
-        } else {
-            return modAngle;
-        }
-    }
     private static double getAngle (double x, double y)
     {
         return Math.atan2(y, x);

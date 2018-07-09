@@ -1,5 +1,6 @@
 package geom;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -49,6 +50,30 @@ public class AABox {
             throw new IllegalArgumentException("yBound may not be negative");
         }
         return new AABox(center.x - xBound, center.x + xBound, center.y - yBound, center.y + yBound);
+    }
+
+    public static AABox fromBoxes(List<AABox> boxes) {
+        if (boxes == null || boxes.isEmpty()) {
+            return null;
+        }
+        double xMin = Double.POSITIVE_INFINITY;
+        double xMax = Double.NEGATIVE_INFINITY;
+        double yMin = Double.POSITIVE_INFINITY;
+        double yMax = Double.NEGATIVE_INFINITY;
+        for (AABox b : boxes) {
+            xMin = xMin > b.xMin ? b.xMin : xMin;
+            xMax = xMax < b.xMax ? b.xMax : xMax;
+            yMin = yMin > b.yMin ? b.yMin : yMin;
+            yMax = yMax < b.yMax ? b.yMax : yMax;
+        }
+        return new AABox(xMin, xMax, yMin, yMax);
+    }
+
+    /**
+     * Returns true iff the other AABox overlaps with this one
+     */
+    public boolean overlaps (AABox other) {
+        return false; // TODO implement
     }
 
     public AABox translatedBy(Vector2 v)

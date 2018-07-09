@@ -1,8 +1,8 @@
 package physics;
 
 import com.google.common.collect.Lists;
+import geom.AABox;
 import geom.Point2;
-import geom.Shape;
 import geom.Vector2;
 
 import java.util.List;
@@ -10,9 +10,12 @@ import java.util.stream.Collectors;
 
 public class Collider {
 
-    private final List<Shape> collisionShapes;
+    private final List<CollisionShape> collisionShapes;
 
-    public Collider (List<Shape> collisionShapes) {
+    private AABox aaBox = null;
+    private boolean aaBoxHasChanged = true;
+
+    public Collider (List<CollisionShape> collisionShapes) {
         this.collisionShapes = collisionShapes;
     }
 
@@ -20,23 +23,65 @@ public class Collider {
         this.collisionShapes = Lists.newArrayList();
     }
 
-    public void addCollisionShape(Shape newCollisionShape) {
+    public void addCollisionShape(CollisionShape newCollisionShape) {
         this.collisionShapes.add(newCollisionShape);
+        aaBoxHasChanged = true;
     }
 
-    public boolean removeCollisionShape(Shape collisionShape) {
+    public boolean removeCollisionShape(CollisionShape collisionShape) {
+        aaBoxHasChanged = true;
         return this.collisionShapes.remove(collisionShape);
     }
 
     public void translate(Vector2 v) {
         this.collisionShapes.stream().map(s -> s.translatedBy(v)).collect(Collectors.toList());
+        aaBoxHasChanged = true;
     }
 
     public void rotateAbout(Point2 rotCenter, double angle) {
         this.collisionShapes.stream().map(s -> s.rotatedAbout(rotCenter, angle)).collect(Collectors.toList());
+        aaBoxHasChanged = true;
     }
 
 
-    // TODO implement shape to shape collision
+    public AABox getBoundingBox() {
+        if (aaBoxHasChanged) {
+            aaBox = AABox.fromBoxes(collisionShapes.stream().map(cs -> cs.getAABox()).collect(Collectors.toList()));
+            aaBoxHasChanged = false;
+        }
+        return aaBox;
+    }
+
+
+    /**
+     * Detects if this collider is colliding with the other, and if so returns a "resolution vector".
+     * If there is no collision, this will return null.
+     * If there is a collision, the resolution vector returned will be the shortest vector by which this can be translated
+     * such that there is no longer a collision.
+     */
+    public Vector2 resolveCollision(Collider other) {
+        // if the collider's bounding boxes don't overlap, they can't possibly collide
+        if (!this.getBoundingBox().overlaps(other.getBoundingBox())) {
+            return null;
+        }
+
+        for (CollisionShape ms : this.collisionShapes) {
+            for (CollisionShape os : other.collisionShapes) {
+                // if individual shapes bounding boxes don't overlap, those shapes can't possibly collide
+                if (!ms.getAABox().overlaps(os.getAABox())) {
+                    continue;
+                }
+                // TODO resolve collision hard
+                // TODO how handle multiple shape collision?
+            }
+        }
+
+        return null; // TODO implement
+    }
+
+    // like, resolveCollision, returns resolution vector for s1 to get out of s2.
+    private Vector2 resolveShapeCollision(CollisionShape s1, CollisionShape s2) {
+        return null; // TODO implement
+    }
 
 }
