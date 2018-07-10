@@ -65,22 +65,26 @@ public class Collider {
             return null;
         }
 
+        Vector2 bestResolutionVector = null;
         for (CollisionShape ms : this.collisionShapes) {
             for (CollisionShape os : other.collisionShapes) {
-                // if individual shapes bounding boxes don't overlap, those shapes can't possibly collide
-                if (!ms.getAABox().overlaps(os.getAABox())) {
-                    continue;
+                Vector2 resVector = resolveShapeCollision(ms, os);
+                if (resVector != null && (bestResolutionVector == null || resVector.magnitude < bestResolutionVector.magnitude)) {
+                    bestResolutionVector = resVector;
                 }
-                // TODO resolve collision hard
-                // TODO how handle multiple shape collision?
             }
         }
 
-        return null; // TODO implement
+        return bestResolutionVector;
     }
 
     // like, resolveCollision, returns resolution vector for s1 to get out of s2.
-    private Vector2 resolveShapeCollision(CollisionShape s1, CollisionShape s2) {
+    private static Vector2 resolveShapeCollision(CollisionShape s1, CollisionShape s2) {
+        // if individual shapes bounding boxes don't overlap, those shapes can't possibly collide
+        if (!s1.getAABox().overlaps(s2.getAABox())) {
+            return null;
+        }
+
         return null; // TODO implement
     }
 
