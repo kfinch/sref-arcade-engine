@@ -38,6 +38,13 @@ public class Point2 implements Shape
         return new Vector2(other.x - x, other.y - y);
     }
 
+    /** Gets the location of this point projected onto a line through the origin with a given angle */
+    public double projectedOnto(double angle) {
+        Vector2 original = new Vector2(x, y);
+        Vector2 normalToAngle = original.rotatedBy(-angle);
+        return normalToAngle.x; // TODO DOUBLE CHECK THIS
+    }
+
     /**
      * Returns the Point2 that is this Point2 translated by the given Vector2.
      * @param translate

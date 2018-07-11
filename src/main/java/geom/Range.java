@@ -1,5 +1,7 @@
 package geom;
 
+import java.util.Objects;
+
 public class Range {
 
     public final double min, max;
@@ -23,12 +25,26 @@ public class Range {
 
     public double getSize() { return max - min; }
 
+    public boolean contains(double v) {
+        return min <= v && v <= max;
+    }
+
+    public boolean containsExclusive(double v) {
+        return min < v && v < max;
+    }
+
     /**
      * Returns a range representing the overlap of this range and another.
      * Null if there is no overlap, and returns a 0 size Range when the two Ranges are only 'touching'.
      */
     public Range overlap (Range other) {
-        return null; // TODO implement
+        double biggestMin = Math.max(min, other.min);
+        double smallestMax = Math.min(max, other.max);
+        if (biggestMin > smallestMax) {
+            return null;
+        } else {
+            return new Range(biggestMin, smallestMax);
+        }
     }
 
     /**
@@ -43,6 +59,17 @@ public class Range {
         return overlap;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Range range = (Range) o;
+        return Double.compare(range.min, min) == 0 &&
+                Double.compare(range.max, max) == 0;
+    }
 
-
+    @Override
+    public int hashCode() {
+        return Objects.hash(min, max);
+    }
 }

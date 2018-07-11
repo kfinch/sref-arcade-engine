@@ -73,7 +73,14 @@ public class AABox {
      * Returns true iff the other AABox overlaps with this one
      */
     public boolean overlaps (AABox other) {
-        return false; // TODO implement
+        double biggestXMin = Math.max(xMin, other.xMin);
+        double smallestXMax = Math.min(xMax, other.xMax);
+        if (biggestXMin > smallestXMax) {
+            return false;
+        }
+        double biggestYMin = Math.max(yMin, other.yMin);
+        double smallestYMax = Math.min(yMax, other.yMax);
+        return (biggestYMin > smallestYMax);
     }
 
     public AABox translatedBy(Vector2 v)
