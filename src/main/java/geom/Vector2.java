@@ -54,6 +54,10 @@ public class Vector2 {
      */
     public static Vector2 fromMagnitudeAndAngle (double magnitude, double angle)
     {
+        if (magnitude < 0) { // negative magnitude -> reverse direction
+            magnitude *= -1;
+            angle += Math.PI;
+        }
         return new Vector2(getX(magnitude, angle), getY(magnitude, angle), magnitude, angle);
     }
 
