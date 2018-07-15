@@ -1,16 +1,25 @@
 package geom;
 
-import javax.sound.sampled.Line;
 import java.util.Objects;
 
 public class LineSegment2 {
 
     public final Point2 start, end;
 
+    private AABox boundingBox = null;
+
     public LineSegment2 (Point2 start, Point2 end)
     {
         this.start = start;
         this.end = end;
+    }
+
+    private AABox getBoundingBox() {
+        if (boundingBox == null) {
+            boundingBox = new AABox(Math.min(start.x, end.x), Math.max(start.x, end.x),
+                    Math.min(start.y, end.y), Math.max(start.y, end.y));
+        }
+        return boundingBox;
     }
 
     /**
@@ -20,6 +29,10 @@ public class LineSegment2 {
      * then the returned Point is the point closest to l1.
      */
     public static Point2 intersection (LineSegment2 l1, LineSegment2 l2) {
+        if (!l1.getBoundingBox().overlaps(l2.getBoundingBox())) {
+            return null; // if bounding boxes don't collide, can't possibly intersect
+        }
+
         boolean isL1vert = l1.start.x == l1.end.x;
         boolean isL2vert = l2.start.x == l2.end.x;
         if (isL1vert && isL2vert) { // both lines are vertical
