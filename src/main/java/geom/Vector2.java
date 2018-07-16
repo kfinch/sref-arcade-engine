@@ -9,14 +9,14 @@ public class Vector2 {
 
     public final double x, y;
     public final double magnitude;
-    public final double angle; // in radians from origin (+x). Always in the range [-PI, PI]
+    public final Angle angle;
 
-    private Vector2 (double x, double y, double magnitude, double angle)
+    private Vector2 (double x, double y, double magnitude, Angle angle)
     {
         this.x = x;
         this.y = y;
         this.magnitude = magnitude;
-        this.angle = Angles.normalized(angle);
+        this.angle = angle;
     }
 
     /**
@@ -46,36 +46,40 @@ public class Vector2 {
         this(0, 0);
     }
 
+    public static Vector2 fromMagnitudeAndAngle (double magnitude, double angle) {
+        return fromMagnitudeAndAngle(magnitude, new Angle(angle));
+    }
+
     /**
      * Builds a new Vector2 from magnitude and angle
      * @param magnitude
      * @param angle
      * @return
      */
-    public static Vector2 fromMagnitudeAndAngle (double magnitude, double angle)
+    public static Vector2 fromMagnitudeAndAngle (double magnitude, Angle angle)
     {
         if (magnitude < 0) { // negative magnitude -> reverse direction
             magnitude *= -1;
-            angle += Math.PI;
+            angle = angle.reversed();
         }
         return new Vector2(getX(magnitude, angle), getY(magnitude, angle), magnitude, angle);
     }
 
-    private static double getAngle (double x, double y)
+    private static Angle getAngle (double x, double y)
     {
-        return Math.atan2(y, x);
+        return new Angle(Math.atan2(y, x));
     }
     private static double getMagnitude (double x, double y)
     {
         return Math.sqrt(Math.pow(x, 2) + Math.pow(y, 2));
     }
-    private static double getX (double magnitude, double angle)
+    private static double getX (double magnitude, Angle angle)
     {
-        return magnitude * Math.cos(angle);
+        return magnitude * Math.cos(angle.radians);
     }
-    private static double getY (double magnitude, double angle)
+    private static double getY (double magnitude, Angle angle)
     {
-        return magnitude * Math.sin(angle);
+        return magnitude * Math.sin(angle.radians);
     }
 
     /**
@@ -83,9 +87,9 @@ public class Vector2 {
      * @param deltaAngle
      * @return
      */
-    public Vector2 rotatedBy(double deltaAngle)
+    public Vector2 rotatedBy(Angle deltaAngle)
     {
-        return fromMagnitudeAndAngle(magnitude, angle + deltaAngle);
+        return fromMagnitudeAndAngle(magnitude, angle.addedTo(deltaAngle));
     }
 
     /**
@@ -93,7 +97,7 @@ public class Vector2 {
      * @param newAngle
      * @return
      */
-    public Vector2 rotatedTo (double newAngle)
+    public Vector2 rotatedTo (Angle newAngle)
     {
         return fromMagnitudeAndAngle(magnitude, newAngle);
     }
@@ -158,9 +162,9 @@ public class Vector2 {
      * @param projAngle
      * @return
      */
-    public Vector2 vectorProjection(double projAngle)
+    public Vector2 vectorProjection(Angle projAngle)
     {
-        double newMag = magnitude * Math.cos(angle - projAngle);
+        double newMag = magnitude * Math.cos(angle.radians - projAngle.radians);
         return fromMagnitudeAndAngle(newMag, projAngle);
     }
 

@@ -1,9 +1,6 @@
 package physics;
 
-import geom.LineSegment2;
-import geom.Point2;
-import geom.Range;
-import geom.Shape;
+import geom.*;
 
 import java.util.Collection;
 
@@ -19,7 +16,7 @@ public interface CollisionShape extends Shape {
      * Not all CollisionShape implementations will need the other shape to generate points.
      * Never <code>null</code> (or empty ??? TODO)
      */
-    public Collection<Double> getSatAngles (CollisionShape other);
+    public Collection<Angle> getSatAngles (CollisionShape other);
 
     /**
      * Generates relevant points of interest with respect to another collision shape,

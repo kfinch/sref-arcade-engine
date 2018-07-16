@@ -39,7 +39,7 @@ public class Point2 implements Shape
     }
 
     /** Gets the location of this point projected onto a line through the origin with a given angle */
-    public double projectedOnto(double angle) {
+    public double projectedOnto(Angle angle) {
         Vector2 original = new Vector2(x, y);
         Vector2 normalToAngle = original.rotatedBy(-angle);
         return normalToAngle.x; // TODO DOUBLE CHECK THIS

@@ -1,10 +1,7 @@
 package physics;
 
 import com.google.common.collect.Lists;
-import geom.Circle;
-import geom.LineSegment2;
-import geom.Point2;
-import geom.Range;
+import geom.*;
 
 import java.util.Collection;
 
@@ -19,7 +16,7 @@ public class CollisionCircle extends Circle implements CollisionShape {
     }
 
     @Override
-    public Collection<Double> getSatAngles(CollisionShape other) {
+    public Collection<Angle> getSatAngles(CollisionShape other) {
         return null;
     }
 
