@@ -27,8 +27,8 @@ public class Circle implements Shape {
     }
 
     @Override
-    public Circle rotatedAbout(Point2 rotCenter, double angle) {
-        return new Circle(center.rotatedAbout(rotCenter, angle), radius);
+    public Circle rotatedAbout(Point2 rotCenter, Rotation rot) {
+        return new Circle(center.rotatedAbout(rotCenter, rot), radius);
     }
 
     @Override

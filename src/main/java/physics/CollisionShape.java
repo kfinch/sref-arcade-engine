@@ -1,9 +1,6 @@
 package physics;
 
-import geom.LineSegment2;
-import geom.Point2;
-import geom.Range;
-import geom.Shape;
+import geom.*;
 
 import java.util.Collection;
 
@@ -14,12 +11,12 @@ import java.util.Collection;
 public interface CollisionShape extends Shape {
 
     /**
-     * Generates the angles with respect to another collision shape
+     * Generates the facings with respect to another collision shape
      * by which we can use the Separating Axis Theorem to detect and resolve collision.
      * Not all CollisionShape implementations will need the other shape to generate points.
      * Never <code>null</code> (or empty ??? TODO)
      */
-    public Collection<Double> getSatAngles (CollisionShape other);
+    public Collection<Facing> getSatFacings (CollisionShape other);
 
     /**
      * Generates relevant points of interest with respect to another collision shape,
@@ -30,10 +27,11 @@ public interface CollisionShape extends Shape {
     public Collection<Point2> getPoints (CollisionShape other);
 
     /**
-     * Gets the projection of this shape onto a line with the given angle that passes through the origin.
+     * Gets the projection of this shape onto a line normal to the given facing that passes through the origin.
+     * Effectively, this is the "1D shape" of this CollisionShape as it would appear being looked at from the given facing.
      * Never <code>null</code>.
      */
-    public Range getProjectionOnAngle (double angle);
+    public Range getProjectionOnFacing (Facing facing);
 
     /**
      * Gets the point closest to the given LineSegment's start at which it intersects with this shape,

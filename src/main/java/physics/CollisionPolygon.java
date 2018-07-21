@@ -1,9 +1,6 @@
 package physics;
 
-import geom.LineSegment2;
-import geom.Point2;
-import geom.Polygon;
-import geom.Range;
+import geom.*;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -19,8 +16,8 @@ public class CollisionPolygon extends Polygon implements CollisionShape {
 
 
     @Override
-    public Collection<Double> getSatAngles(CollisionShape other) {
-        return null;
+    public Collection<Facing> getSatFacings(CollisionShape other) {
+        return null; // TODO implement
     }
 
     @Override
@@ -29,8 +26,8 @@ public class CollisionPolygon extends Polygon implements CollisionShape {
     }
 
     @Override
-    public Range getProjectionOnAngle(double angle) {
-        return null;
+    public Range getProjectionOnFacing(Facing facing) {
+        return null; // TODO implement
     }
 
     @Override

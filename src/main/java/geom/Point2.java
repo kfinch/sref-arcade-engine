@@ -38,10 +38,12 @@ public class Point2 implements Shape
         return new Vector2(other.x - x, other.y - y);
     }
 
-    /** Gets the location of this point projected onto a line through the origin with a given angle */
-    public double projectedOnto(double angle) {
+    /**
+     * Gets the location of this point projected onto a line through the origin normal to the given facing.
+     */
+    public double projectedOnto(Facing angle) {
         Vector2 original = new Vector2(x, y);
-        Vector2 normalToAngle = original.rotatedBy(-angle);
+        Vector2 normalToAngle = original.rotatedBy(Rotation.of(-angle.radians));
         return normalToAngle.x; // TODO DOUBLE CHECK THIS
     }
 
@@ -57,8 +59,8 @@ public class Point2 implements Shape
     }
 
     @Override
-    public Point2 rotatedAbout(Point2 rotCenter, double angle) {
-        return this.translatedBy(rotCenter.vectorTo(this).rotatedBy(angle));
+    public Point2 rotatedAbout(Point2 rotCenter, Rotation rot) {
+        return this.translatedBy(rotCenter.vectorTo(this).rotatedBy(rot));
     }
 
     @Override

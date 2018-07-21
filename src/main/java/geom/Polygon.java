@@ -21,9 +21,9 @@ public class Polygon implements Shape {
     }
 
     @Override
-    public Polygon rotatedAbout(Point2 rotCenter, double angle)
+    public Polygon rotatedAbout(Point2 rotCenter, Rotation rot)
     {
-        Point2[] newPoints = Arrays.stream(points).map(p -> p.rotatedAbout(rotCenter, angle)).toArray(Point2[]::new);
+        Point2[] newPoints = Arrays.stream(points).map(p -> p.rotatedAbout(rotCenter, rot)).toArray(Point2[]::new);
         return new Polygon(newPoints);
     }
 
