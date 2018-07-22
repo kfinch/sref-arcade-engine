@@ -1,5 +1,6 @@
 package geom;
 
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 /**
@@ -8,6 +9,8 @@ import java.util.Objects;
  * Facings are always in the range [-PI, PI)
  */
 public class Facing {
+
+    private static final DecimalFormat THREE_DEC_FORMATTER = new DecimalFormat("#.###");
 
     public static final Facing RIGHT = Facing.of(0);
     public static final Facing EAST = Facing.of(0);
@@ -62,5 +65,10 @@ public class Facing {
     @Override
     public int hashCode() {
         return Objects.hash(radians);
+    }
+
+    @Override
+    public String toString() {
+        return "F{" + THREE_DEC_FORMATTER.format(radians/(Math.PI)) + "pi}";
     }
 }

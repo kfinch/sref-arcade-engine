@@ -1,5 +1,6 @@
 package geom;
 
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 /**
@@ -7,6 +8,8 @@ import java.util.Objects;
  * A positive value is a counter-clockwise rotation, a negative value is a clockwise rotation.
  */
 public class Rotation {
+
+    private static final DecimalFormat THREE_DEC_FORMATTER = new DecimalFormat("#.###");
 
     public static final Rotation NONE = Rotation.of(0);
 
@@ -39,5 +42,10 @@ public class Rotation {
     @Override
     public int hashCode() {
         return Objects.hash(radians);
+    }
+
+    @Override
+    public String toString() {
+        return "R{" + THREE_DEC_FORMATTER.format(radians/(Math.PI)) + "pi}";
     }
 }
