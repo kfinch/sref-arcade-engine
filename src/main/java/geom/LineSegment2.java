@@ -14,6 +14,10 @@ public class LineSegment2 {
         this.end = end;
     }
 
+    public LineSegment2 (double x1, double y1, double x2, double y2) {
+        this(new Point2(x1, y1), new Point2(x2, y2));
+    }
+
     private AABox getBoundingBox() {
         if (boundingBox == null) {
             boundingBox = new AABox(Math.min(start.x, end.x), Math.max(start.x, end.x),
@@ -93,7 +97,7 @@ public class LineSegment2 {
         } else { // not parallel
             // rearrange the two "y = a*x + b" equations to solve for x and y
             double rx = (b2 - b1) / (a1 - a2);
-            double ry = a1 * rx + a2;
+            double ry = a1 * rx + b1;
             // check that both segments extend far enough to reach their intersection
             if (new Range(l1.start.x, l1.end.x).contains(rx) && new Range(l2.start.x, l2.end.x).contains(rx)) {
                 return new Point2(rx, ry);

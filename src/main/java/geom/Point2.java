@@ -1,5 +1,6 @@
 package geom;
 
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 /**
@@ -7,6 +8,8 @@ import java.util.Objects;
  */
 public class Point2 implements Shape
 {
+
+    private static final DecimalFormat THREE_DEC_FORMATTER = new DecimalFormat("#.###");
 
     public final double x, y;
 
@@ -81,5 +84,14 @@ public class Point2 implements Shape
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
+    }
+
+    @Override
+    public String toString() {
+        return "P{" + x + "," + y + "}";
+    }
+
+    public String roundedToString() {
+        return "P{" + THREE_DEC_FORMATTER.format(x) + "," + THREE_DEC_FORMATTER.format(y) + "}";
     }
 }

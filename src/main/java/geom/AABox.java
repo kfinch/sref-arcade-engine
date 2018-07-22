@@ -80,7 +80,7 @@ public class AABox {
         }
         double biggestYMin = Math.max(yMin, other.yMin);
         double smallestYMax = Math.min(yMax, other.yMax);
-        return (biggestYMin > smallestYMax);
+        return !(biggestYMin > smallestYMax);
     }
 
     public AABox translatedBy(Vector2 v)

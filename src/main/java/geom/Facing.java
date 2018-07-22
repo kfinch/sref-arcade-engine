@@ -32,7 +32,6 @@ public class Facing {
      * Normalizes a facing to be in the range [-PI, PI)
      */
     private static double normalizeFacing(double facing) {
-        // FIXME does this handle the inclusive/exclusive sides correctly?
         double modFacing = facing % (Math.PI * 2);
         if (modFacing >= Math.PI) {
             return modFacing - (2 * Math.PI);
