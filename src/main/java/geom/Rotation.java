@@ -8,6 +8,8 @@ import java.util.Objects;
  */
 public class Rotation {
 
+    public static final Rotation NONE = Rotation.of(0);
+
     public static final Rotation CW_QUARTER = Rotation.of(-Math.PI / 2);
     public static final Rotation CW_HALF = Rotation.of(-Math.PI);
     public static final Rotation CW_FULL = Rotation.of(-2*Math.PI);

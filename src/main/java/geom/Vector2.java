@@ -175,7 +175,7 @@ public class Vector2 {
     }
 
     @Override
-    public String toString() { return "{" + x + "," + y + "}"; }
+    public String toString() { return "V{" + x + "," + y + "}"; }
 
     @Override
     public boolean equals(Object o) {
