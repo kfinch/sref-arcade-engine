@@ -25,7 +25,7 @@ public class Facing {
     public final double radians;
 
     private Facing(double radians) {
-        this.radians = radians;
+        this.radians = normalizeFacing(radians);
     }
 
     /**
@@ -34,7 +34,7 @@ public class Facing {
     private static double normalizeFacing(double facing) {
         // FIXME does this handle the inclusive/exclusive sides correctly?
         double modFacing = facing % (Math.PI * 2);
-        if (modFacing > Math.PI) {
+        if (modFacing >= Math.PI) {
             return modFacing - (2 * Math.PI);
         } else if (modFacing < -Math.PI) {
             return modFacing + (2 * Math.PI);

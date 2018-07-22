@@ -2,10 +2,7 @@ package physics;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import geom.AABox;
-import geom.Point2;
-import geom.Range;
-import geom.Vector2;
+import geom.*;
 
 import java.util.List;
 import java.util.Set;
@@ -45,8 +42,8 @@ public class Collider {
         aaBoxHasChanged = true;
     }
 
-    public void rotateAbout(Point2 rotCenter, double angle) {
-        this.collisionShapes.stream().map(s -> s.rotatedAbout(rotCenter, angle)).collect(Collectors.toList());
+    public void rotateAbout(Point2 rotCenter, Rotation rot) {
+        this.collisionShapes.stream().map(s -> s.rotatedAbout(rotCenter, rot)).collect(Collectors.toList());
         aaBoxHasChanged = true;
     }
 
@@ -96,13 +93,13 @@ public class Collider {
         }
 
         Vector2 resolutionVector = null; // looking for shortest resolution vector
-        Set<Double> anglesToCheck = Sets.newHashSet(); // a set to avoid checking same angle more than once
-        anglesToCheck.addAll(s1.getSatAngles(s2));
-        anglesToCheck.addAll(s2.getSatAngles(s1));
+        Set<Facing> projFacings = Sets.newHashSet(); // a set to avoid checking same angle more than once
+        projFacings.addAll(s1.getSatFacings(s2));
+        projFacings.addAll(s2.getSatFacings(s1));
 
-        for (double projAngle : anglesToCheck) {
-            Range s1r = s1.getProjectionOnAngle(projAngle);
-            Range s2r = s2.getProjectionOnAngle(projAngle);
+        for (Facing projFacing : projFacings) {
+            Range s1r = s1.getProjectionOnFacing(projFacing);
+            Range s2r = s2.getProjectionOnFacing(projFacing);
             if (s1r.overlap(s2r) == null) { // FIXME use overlapExclusive?
                 return null;
             }
@@ -111,7 +108,7 @@ public class Collider {
             if (resolutionVector != null && minDisplace > resolutionVector.magnitude) {
                 continue; // current res vector is smaller
             }
-            resolutionVector = Vector2.fromMagnitudeAndAngle(minDisplace, projAngle); // TODO check angle
+            resolutionVector = Vector2.fromMagnitudeAndAngle(minDisplace, projFacing); // TODO check angle
         }
 
         return resolutionVector;
