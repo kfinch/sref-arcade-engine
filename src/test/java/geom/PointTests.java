@@ -35,41 +35,41 @@ public class PointTests {
 
     @Test
     public void testVectorTo() {
-        Assert.assertEquals(new Vector2(1,1), p1.vectorTo(p2));
-        Assert.assertEquals(new Vector2(-1,-1), p2.vectorTo(p1));
-        Assert.assertEquals(new Vector2(0,0), p1.vectorTo(p1));
+        TestUtils.assertVectorsEqual(new Vector2(1,1), p1.vectorTo(p2));
+        TestUtils.assertVectorsEqual(new Vector2(-1,-1), p2.vectorTo(p1));
+        TestUtils.assertVectorsEqual(new Vector2(0,0), p1.vectorTo(p1));
     }
 
     @Test
     public void testTranslatedBy() {
         Point2 p1Up10 = p1.translatedBy(new Vector2(0, 10));
-        Assert.assertEquals(new Point2(1, 11), p1Up10);
+        TestUtils.assertPointsEqual(new Point2(1, 11), p1Up10);
 
         Vector2 v1To2 = p1.vectorTo(p2);
-        Assert.assertEquals(p2, p1.translatedBy(v1To2));
+        TestUtils.assertPointsEqual(p2, p1.translatedBy(v1To2));
     }
 
     @Test
     public void testRotatedAbout() {
         Point2 p1QuarterTurn = p1.rotatedAbout(origin, Rotation.CCW_QUARTER);
-        Assert.assertEquals(new Point2(-1, 1), p1QuarterTurn);
+        TestUtils.assertPointsEqual(new Point2(-1, 1), p1QuarterTurn);
 
         Point2 p1HalfTurn = p1.rotatedAbout(origin, Rotation.CCW_HALF);
-        Assert.assertEquals(new Point2(-1, -1), p1HalfTurn);
+        TestUtils.assertPointsEqual(new Point2(-1, -1), p1HalfTurn);
         Point2 p1RevHalfTurn = p1.rotatedAbout(origin, Rotation.CCW_HALF);
-        Assert.assertEquals(new Point2(-1, -1), p1RevHalfTurn);
+        TestUtils.assertPointsEqual(new Point2(-1, -1), p1RevHalfTurn);
 
         Point2 p1FullTurn = p1.rotatedAbout(origin, Rotation.CCW_FULL);
-        Assert.assertEquals(p1, p1FullTurn);
+        TestUtils.assertPointsEqual(p1, p1FullTurn);
 
         Point2 p1QuarterAboutP2 = p1.rotatedAbout(p2, Rotation.CCW_QUARTER);
-        Assert.assertEquals(new Point2(3, 1), p1QuarterAboutP2);
+        TestUtils.assertPointsEqual(new Point2(3, 1), p1QuarterAboutP2);
 
         Point2 p1BigSpin = p1.rotatedAbout(origin, Rotation.of(Math.PI * 5)); // 2 and a half turns
-        Assert.assertEquals(new Point2(-1, -1), p1BigSpin);
+        TestUtils.assertPointsEqual(new Point2(-1, -1), p1BigSpin);
 
         Point2 p1NoRot = p1.rotatedAbout(origin, Rotation.NONE);
-        Assert.assertEquals(p1, p1NoRot);
+        TestUtils.assertPointsEqual(p1, p1NoRot);
     }
 
 }

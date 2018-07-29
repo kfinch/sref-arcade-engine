@@ -63,7 +63,7 @@ public class Point2 implements Shape
 
     @Override
     public Point2 rotatedAbout(Point2 rotCenter, Rotation rot) {
-        return this.translatedBy(rotCenter.vectorTo(this).rotatedBy(rot));
+        return rotCenter.translatedBy(rotCenter.vectorTo(this).rotatedBy(rot));
     }
 
     @Override
