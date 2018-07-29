@@ -174,6 +174,16 @@ public class Vector2 {
         return fromMagnitudeAndAngle(newMag, projAngle);
     }
 
+    /**
+     * Gets the Vector2 that is the vector projection of this Vector2 onto the given Vector2.
+     * @param projVector may not be <code>null</code>
+     * @return
+     */
+    public Vector2 vectorProjection(Vector2 projVector)
+    {
+        return vectorProjection(projVector.angle);
+    }
+
     @Override
     public String toString() { return "V{" + x + "," + y + "}"; }
 

@@ -123,11 +123,36 @@ public class VectorTests {
         }
     }
 
-    // TODO test addedTo
+    @Test
+    public void testAddedTo() {
+        TestUtils.assertVectorsEqual(new Vector2(3, 3), v1.addedTo(v2));
+        TestUtils.assertVectorsEqual(new Vector2(3, 3), v2.addedTo(v1));
+        TestUtils.assertVectorsEqual(new Vector2(0, 0), v1.addedTo(vn1));
+        TestUtils.assertVectorsEqual(v1, v1.addedTo(new Vector2(0, 0)));
+        // TODO more?
+    }
 
-    // TODO test multipliedBy
+    @Test
+    public void testMultipliedBy() {
+        TestUtils.assertVectorsEqual(v2, v1.multipliedBy(2));
+        // TODO more?
+    }
 
-    // TODO test dotProduct
+    @Test
+    public void testDotProduct() {
+        Assert.assertEquals(0, horiz.dotProduct(vert), TestUtils.DELTA);
+        Assert.assertEquals(0, v1.dotProduct(v1.rotatedBy(Rotation.CCW_QUARTER)), TestUtils.DELTA);
+    }
 
-    // TODO test vectorProjection
+    @Test
+    public void testVectorProjection() {
+        TestUtils.assertVectorsEqual(new Vector2(1, 0), v1.vectorProjection(horiz));
+        TestUtils.assertVectorsEqual(new Vector2(1, 0), v1.vectorProjection(Facing.RIGHT));
+
+        TestUtils.assertVectorsEqual(new Vector2(2, 0), v2.vectorProjection(horiz));
+        TestUtils.assertVectorsEqual(new Vector2(0, 2), v2.vectorProjection(vert));
+
+        TestUtils.assertVectorsEqual(new Vector2(-1, 0), vn1.vectorProjection(Facing.RIGHT));
+        TestUtils.assertVectorsEqual(new Vector2(-1, 0), vn1.vectorProjection(Facing.LEFT));
+    }
 }
