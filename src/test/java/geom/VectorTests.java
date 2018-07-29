@@ -87,11 +87,41 @@ public class VectorTests {
         TestUtils.assertVectorsEqual(v1, v1Same);
     }
 
-    // TODO test reveresed
+    @Test
+    public void testReversed() {
+        Vector2 v1Rev = v1.reversed();
+        TestUtils.assertVectorsEqual(vn1, v1Rev);
+        Vector2 v1RevRev = v1.reversed().reversed();
+        TestUtils.assertVectorsEqual(v1, v1RevRev);
 
-    // TODO test scaledTo
-    
-    // TODO test unitVector
+        for(int i=0; i<1000; i++) {
+            double randX = TestUtils.randomDouble(-100, 100);
+            double randY = TestUtils.randomDouble(-100, 100);
+            Vector2 randVec = new Vector2(randX, randY);
+            Vector2 reversedVec = randVec.reversed();
+            Assert.assertEquals(-randX, reversedVec.x, TestUtils.DELTA);
+            Assert.assertEquals(-randY, reversedVec.y, TestUtils.DELTA);
+        }
+    }
+
+    @Test
+    public void testScaledTo() {
+        TestUtils.assertVectorsEqual(v2, v1.scaledTo(Math.sqrt(8)));
+        TestUtils.assertVectorsEqual(new Vector2(1, 0), horiz.scaledTo(1));
+        // TODO more?
+    }
+
+    @Test
+    public void testUnitVector() {
+        Vector2 v2Unit = v2.unitVector();
+        Assert.assertEquals(Math.sqrt(0.5), v2Unit.x, TestUtils.DELTA);
+        Assert.assertEquals(Math.sqrt(0.5), v2Unit.y, TestUtils.DELTA);
+
+        for (int i=0; i<1000; i++) {
+            Vector2 randVec = new Vector2(TestUtils.randomDouble(-100, 100), TestUtils.randomDouble(-100, 100));
+            Assert.assertEquals(1, randVec.unitVector().magnitude, TestUtils.DELTA);
+        }
+    }
 
     // TODO test addedTo
 
